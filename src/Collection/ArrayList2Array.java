@@ -9,7 +9,6 @@ import java.util.ListIterator;
 
 public class ArrayList2Array {
 	public static void main(String[] args){
-		//start main 
 		Color[] arrayColors = new Color[]{new Color("black"),new Color("blue"),new Color("yellow")};
 		LinkedList linkedListColors = new LinkedList(Arrays.asList(arrayColors));
 		List<Color> listColors2 = Arrays.asList(arrayColors);
