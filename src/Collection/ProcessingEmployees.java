@@ -35,6 +35,7 @@ public class ProcessingEmployees {
 		System.out.println();
 		Map<String, List<Employee>> groupedByDepartment = list.stream()
 				.collect(Collectors.groupingBy(Employee::getDepartment));
+		
 
 		groupedByDepartment.forEach((department, lstEmployees) -> {
 			System.out.println(department);
