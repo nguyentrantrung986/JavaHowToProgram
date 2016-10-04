@@ -20,7 +20,8 @@ public class ProcessingEmployees {
 
 		// get List view of the Employees
 		List<Employee> list = Arrays.asList(employees);
-
+		
+		//print employees within the salary range
 		Predicate<Employee> salaryRange = (Employee e) -> {
 			return (e.getSalary() >= 3000 && e.getSalary() <= 5000);
 		};
@@ -33,17 +34,22 @@ public class ProcessingEmployees {
 		list.stream().filter(salaryRange).sorted(Comparator.comparing(getSalary)).forEach(e -> System.out.println(e));
 
 		System.out.println();
-		Map<String, List<Employee>> groupedByDepartment = list.stream()
-				.collect(Collectors.groupingBy(Employee::getDepartment));
 		
-
-		groupedByDepartment.forEach((department, lstEmployees) -> {
-			System.out.println(department);
-			lstEmployees.forEach(e -> {
-				System.out.println(e);
-			});
-		});
+		//grouping employees by department
+		list.stream().collect(Collectors.groupingBy(Employee::getDepartment)).forEach(
+				(String dep, List<Employee> le)->{
+					System.out.println("Department "+dep);
+					le.stream().forEach(e->System.out.println(e));
+				});
 		
-		System.out.printf("%nAverage salar: %.2f",list.stream().mapToDouble(Employee::getSalary).average().orElse(0));
+		//counting employees per department
+		list.stream().collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting())).forEach(
+				(String dep, Long l)->{
+					System.out.printf("%nDepartment %s has %d employees",dep, l);
+				});
+		
+		//Summing and averaging employee salary
+		System.out.printf("%nThe sum of salary: %.2f" ,list.stream().mapToDouble((Employee e)->e.getSalary()).sum());
+		System.out.printf("%nThe average of salary: %.2f",list.stream().mapToDouble(Employee::getSalary).average().getAsDouble());
 	}
 }
